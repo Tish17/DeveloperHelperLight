@@ -21,7 +21,7 @@ public class ContactService {
         String contactData = "Name: " + name + "\n" +
                              "Email: " + email + "\n" +
                              "Text: " + text;
-        mailService.send(toEmail, "New message", contactData);
+        mailService.send(toEmail, "DeveloperHelperLight", contactData);
     }
 
     public List<String> getContactErrors(String name, String email, String text) {
