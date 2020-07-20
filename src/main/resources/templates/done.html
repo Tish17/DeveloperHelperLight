@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css"  th:href="@{/static/css/bootstrap.css}">
+    <title>Done</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/project}">TishTech</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="btn btn-success mr-2" th:href="@{/doc}">Get started</a>
+            </li>
+            <li>
+                <a class="btn btn-warning mr-2" th:href="@{/donate}">Donate</a>
+            </li>
+            <li>
+                <a class="btn btn-light mr-2" th:href="@{/contact}">Contact us</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center">Done</h1>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <form th:action="@{/project/download}" th:object="${project}" method="get">
+        <input type="hidden" th:field="*{name}">
+        <input type="hidden" th:field="*{groupId}">
+        <input type="hidden" th:field="*{model}">
+        <div th:each="variable, variableStat : ${project.variables}">
+            <input type="hidden" th:field="*{variables[__${variableStat.index}__].type}">
+            <input type="hidden" th:field="*{variables[__${variableStat.index}__].name}">
+        </div>
+        <input type="hidden" name="projectPath" th:value="${projectPath}">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <button class="btn btn-success btn-block btn-lg" type="submit">Download</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
