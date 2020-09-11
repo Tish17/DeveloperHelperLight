@@ -3,6 +3,7 @@ package ru.tishtech.developerhelperlight.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.tishtech.developerhelperlight.config.MailConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +12,17 @@ import java.util.regex.Pattern;
 @Service
 public class ContactService {
 
-    @Value("${spring.mail.username}")
-    private String toEmail;
-
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private MailConfig mailConfig;
 
     public void contactToEmail(String name, String email, String text) {
         String contactData = "Name: " + name + "\n" +
                              "Email: " + email + "\n" +
                              "Text: " + text;
-        mailService.send(toEmail, "DeveloperHelperLight", contactData);
+        mailService.send(mailConfig.getMailConfigs().get("username"), "DeveloperHelperLight", contactData);
     }
 
     public List<String> getContactErrors(String name, String email, String text) {
