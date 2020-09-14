@@ -40,7 +40,7 @@ public class ProjectController {
 
     @PostMapping("/project/generate")
     public String projectGenerate(Project project, HttpServletRequest request, Model model) {
-        String projectPath = request.getServletContext().getRealPath("/");
+        String projectPath = request.getServletContext().getContextPath();
         GeneratorService.generateFiles(project.getName(), project.getGroupId(), project.getModel(),
                 project.getVariables(), projectPath);
         model.addAttribute("project", project);
@@ -49,12 +49,11 @@ public class ProjectController {
     }
 
     @GetMapping(value = "/project/download", produces = "application/zip")
-    public @ResponseBody
-    byte[] projectDownload(Project project, @RequestParam String projectPath,
-                           HttpServletResponse response) throws IOException {
-            InputStream inputStream = new FileInputStream(projectPath + project.getName() + FileTypes.ZIP_TYPE);
-            response.addHeader(HttpHeaders.CONTENT_DISPOSITION,
-                    "attachment; filename=" + project.getName() + FileTypes.ZIP_TYPE);
-            return IOUtils.toByteArray(inputStream);
+    public @ResponseBody byte[] projectDownload(Project project, @RequestParam String projectPath,
+                                                HttpServletResponse response) throws IOException {
+        InputStream inputStream = new FileInputStream(projectPath + project.getName() + FileTypes.ZIP_TYPE);
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=" + project.getName() + FileTypes.ZIP_TYPE);
+        return IOUtils.toByteArray(inputStream);
     }
 }
