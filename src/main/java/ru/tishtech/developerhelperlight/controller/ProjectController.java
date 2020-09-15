@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 @Controller
 public class ProjectController {
@@ -39,8 +40,8 @@ public class ProjectController {
     }
 
     @PostMapping("/project/generate")
-    public String projectGenerate(Project project, HttpServletRequest request, Model model) {
-        String projectPath = request.getServletContext().getContextPath();
+    public String projectGenerate(Project project, Model model) {
+        String projectPath = "generated-projects/" + UUID.randomUUID() + "/";
         GeneratorService.generateFiles(project.getName(), project.getGroupId(), project.getModel(),
                 project.getVariables(), projectPath);
         model.addAttribute("project", project);
